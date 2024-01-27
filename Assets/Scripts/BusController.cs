@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class BusController : CarController
 {
-    Rigidbody rb;
-    public Vector3 velocity;
+    public Vector3 spawnPoint, spawnRotation;
     // Start is called before the first frame update
-    public void Start()
+    new void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = velocity;
+        base.Start();
+        transform.localPosition = spawnPoint;
+        transform.eulerAngles = spawnRotation;
     }
 
     // Update is called once per frame

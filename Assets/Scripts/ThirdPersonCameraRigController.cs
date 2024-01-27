@@ -22,6 +22,7 @@ public class ThirdPersonCameraRigController : MonoBehaviour
     public bool limitDiagonalSpeed = true;
 
     public float torqueMultiplier = 1f, dampingModifier = 0.1f;
+    public bool disableInput = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,21 +40,23 @@ public class ThirdPersonCameraRigController : MonoBehaviour
         
         transform.position = Vector3.Lerp(transform.position, playerTransform.position, lerpSpeed * Time.deltaTime);
 
-        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        if(!disableInput)
+        {
+            Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(mouseSensitivity, mouseSensitivity));
+            mouseDelta = Vector2.Scale(mouseDelta, new Vector2(mouseSensitivity, mouseSensitivity));
 
-        _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing);
-        _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing);
+            _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing);
+            _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing);
 
-        _mouseAbsolute += _smoothMouse;
+            _mouseAbsolute += _smoothMouse;
 
-        _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, yLowClampAngle, yLowClampAngle + yClampRange);
+            _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, yLowClampAngle, yLowClampAngle + yClampRange);
 
-        //transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, Vector3.right);
-        transform.localRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
-        transform.rotation = Quaternion.Euler(-_mouseAbsolute.y, transform.eulerAngles.y, transform.eulerAngles.z);
-
+            //transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, Vector3.right);
+            transform.localRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
+            transform.rotation = Quaternion.Euler(-_mouseAbsolute.y, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
     }
 
     private void FixedUpdate()
@@ -76,25 +79,26 @@ public class ThirdPersonCameraRigController : MonoBehaviour
             isCursorVisible = !isCursorVisible;
         }
 
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
-        float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed) ? 0.6701f : 1.0f;
+        if(!disableInput)
+        {
+            float inputX = Input.GetAxis("Horizontal");
+            float inputY = Input.GetAxis("Vertical");
+            float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed) ? 0.6701f : 1.0f;
 
-        Vector3 horizontalInputLocalNormalized = new Vector3(0f, 0f, 1);
+            Vector3 horizontalInputLocalNormalized = new Vector3(0f, 0f, 1);
 
-        Debug.Log("local rot: " + transform.rotation.eulerAngles);
-        Debug.Log("force vector: " + transform.rotation * new Vector3(0,0,1));
+            Debug.Log("local rot: " + transform.rotation.eulerAngles);
+            Debug.Log("force vector: " + transform.rotation * new Vector3(0, 0, 1));
 
-        Vector3 horizontalInput = transform.rotation * new Vector3(0f, 0f, inputX) * torqueMultiplier * -1;
-        playerRigidbody.AddTorque(horizontalInput);
-        Vector3 verticalInput = transform.rotation * new Vector3(inputY, 0f, 0f) * torqueMultiplier;
-        playerRigidbody.AddTorque(verticalInput);
+            Vector3 horizontalInput = transform.rotation * new Vector3(0f, 0f, inputX) * torqueMultiplier * -1;
+            playerRigidbody.AddTorque(horizontalInput);
+            Vector3 verticalInput = transform.rotation * new Vector3(inputY, 0f, 0f) * torqueMultiplier;
+            playerRigidbody.AddTorque(verticalInput);
 
 
-        Vector3 currentVelocity = playerRigidbody.velocity;
-        playerRigidbody.AddForce(currentVelocity * -1 * dampingModifier);
-
-        
+            Vector3 currentVelocity = playerRigidbody.velocity;
+            playerRigidbody.AddForce(currentVelocity * -1 * dampingModifier);
+        }
 
     }
 
