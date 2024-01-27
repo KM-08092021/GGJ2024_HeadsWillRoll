@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 482c612f45f4f774e90eb1ebaf147a52, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7fc8576bcdfa0044eb869ec2e390d5f8, type: 2}
+      objectReference: {fileID: 2100000, guid: 5443bc4e5ce5499438a7d12b2c6e913f, type: 2}
     - target: {fileID: 919132149155446097, guid: 482c612f45f4f774e90eb1ebaf147a52, type: 3}
       propertyPath: m_Name
       value: ramp_2x1 Variant

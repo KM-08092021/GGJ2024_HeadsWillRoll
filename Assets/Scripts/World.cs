@@ -8,7 +8,7 @@ public class World : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StartDelay());
+        game = new Game();
     }
 
     // Update is called once per frame
@@ -17,10 +17,4 @@ public class World : MonoBehaviour
         
     }
 
-    IEnumerator StartDelay()
-    {
-        //yield return new WaitForSeconds(2f);
-        game = new Game();
-        yield return null;
-    }
 }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class OverpassController : MonoBehaviour
 {
-    public GameObject bus, player;
+    public GameObject bus, player, playerParts;
+    Player _player;
+
     public void StartIntro()
     {
         StartCoroutine(StartIntro_IE());
@@ -13,8 +15,12 @@ public class OverpassController : MonoBehaviour
     IEnumerator StartIntro_IE()
     {
         Instantiate(bus, transform);
-        Instantiate(player, transform);
-        player.GetComponent<ThirdPersonCameraRigController>().disableInput = true;
-        yield return new WaitForSeconds(3.0f);
+        _player = Instantiate(player, transform).GetComponent<Player>();
+        _player.camController.disableInput = true;
+        _player.ActivateFirstPerson();
+        _player.ToggleKinematic(true);
+        yield return new WaitForSeconds(4.5f);
+        _player.ToggleKinematic(false);
+        
     }
 }
