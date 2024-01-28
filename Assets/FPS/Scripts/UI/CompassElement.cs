@@ -9,17 +9,23 @@ namespace Unity.FPS.UI
 
         [Tooltip("Text override for the marker, if it's a direction")]
         public string TextDirection;
-
+        CompassMarker markerInstance;
         Compass m_Compass;
 
         void Awake()
         {
             m_Compass = FindObjectOfType<Compass>();
 
-            var markerInstance = Instantiate(CompassMarkerPrefab);
+            markerInstance = Instantiate(CompassMarkerPrefab);
 
             markerInstance.Initialize(this, TextDirection);
+            EventManifest.eventLevel1PlayerLoaded += Register;
+        }
+
+        void Register()
+        {
             m_Compass.RegisterCompassElement(transform, markerInstance);
+
         }
 
         void OnDestroy()

@@ -5,7 +5,6 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
     public static Game game;
-    public static Game.GameState beginningState = Game.GameState.LEVEL1;
     // Start is called before the first frame update
     void Start()
     {

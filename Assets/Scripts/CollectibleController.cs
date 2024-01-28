@@ -9,7 +9,7 @@ public class CollectibleController : MonoBehaviour
 
     private void Start()
     {
-        level = GameObject.Find("Level1").GetComponent<Level>();
+        //level = GameObject.Find("Level1").GetComponent<Level>();
     }
     void OnCollisionEnter(Collision other)
     {

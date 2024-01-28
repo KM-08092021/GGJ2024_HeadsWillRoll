@@ -7,6 +7,8 @@ public class CutsceneManager : MonoBehaviour
 {
     //public Level level1;
     public OverpassController overPassCutsceneController;
+    public GameObject level1Prefab;
+    public Transform level1Spawn;
 
     private void Awake()
     {
@@ -16,6 +18,7 @@ public class CutsceneManager : MonoBehaviour
     void _addEventListeners()
     {
         EventManifest.eventGameStart += StartIntro;
+        EventManifest.eventLevel1Start += StartLevel1;
     }
 
     private void OnDestroy()
@@ -26,15 +29,24 @@ public class CutsceneManager : MonoBehaviour
     void _removeEventListeners()
     {
         EventManifest.eventGameStart -= StartIntro;
+        EventManifest.eventLevel1Start -= StartLevel1;
     }
 
     void StartIntro()
     {
         overPassCutsceneController.StartIntro(() =>
         {
+            
             gameInstance.changeGameState(GameState.LEVEL1);
         });
     }
+
+    void StartLevel1()
+    {
+        Instantiate(level1Prefab, level1Spawn);
+    }
+
+
 
 
 }

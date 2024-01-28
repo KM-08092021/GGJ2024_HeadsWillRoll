@@ -7,13 +7,13 @@ public class Game
 {
     public static Game gameInstance;
     static GameState currentGameState;
-    public enum GameState { START, LEVEL1, FINISH }    
+    public enum GameState { START, LEVEL1, WIN, LOSE, FINISH }    
     public Game()
     {
         gameInstance = this;
 
         //currentGameState = GameState.START;
-        currentGameState = World.beginningState;
+        currentGameState = GameState.LEVEL1;
         _setState(currentGameState);
     }
 
@@ -27,6 +27,12 @@ public class Game
                 break;
             case GameState.LEVEL1:
                 EventManifest.dispatchLevel1Start();
+                break;
+            case GameState.WIN:
+                EventManifest.dispatchGameWin();
+                break;
+            case GameState.LOSE:
+                EventManifest.dispatchGameLose();
                 break;
             case GameState.FINISH:
                 EventManifest.dispatchGameFinish();

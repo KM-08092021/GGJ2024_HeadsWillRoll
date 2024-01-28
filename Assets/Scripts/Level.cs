@@ -7,13 +7,13 @@ using Unity.FPS.UI;
 
 public class Level : MonoBehaviour
 {
-    public GameObject level1Player;
+    public GameObject level1Player, winScreen, loseScreen;
     public List<GameObject> collectedItems = new List<GameObject>();
     Player _player;
     public bool isPickupEnabled = false;
     Coroutine pickupDelayCoroutine;
     public int numOfRedeemedItems = 0;
-    public TextMeshProUGUI redeemedItemsText, winText, pickupInstructionText;
+    public TextMeshProUGUI redeemedItemsText, pickupInstructionText;
     public int totalNumOfParts = 5;
     public Unity.FPS.UI.Compass compass;
     private void Awake()
@@ -24,8 +24,8 @@ public class Level : MonoBehaviour
 
     void _addEventListeners()
     {
-        EventManifest.eventLevel1Start += StartLevel1;
-        EventManifest.eventGameFinish += FinishLevel1;
+        EventManifest.eventGameWin += WinLevel1;
+        EventManifest.eventGameLose += LoseLevel1;
         EventManifest.eventIsTouchingItem += ToggleItemPickupMessage;
     }
     private void OnDestroy()
@@ -35,9 +35,14 @@ public class Level : MonoBehaviour
 
     void _removeEventListeners()
     {
-        EventManifest.eventLevel1Start -= StartLevel1;
-        EventManifest.eventGameFinish -= FinishLevel1;
+        EventManifest.eventGameFinish -= WinLevel1;
+        EventManifest.eventGameLose -= LoseLevel1;
         EventManifest.eventIsTouchingItem -= ToggleItemPickupMessage;
+    }
+
+    private void Start()
+    {
+        StartLevel1();
     }
 
     void Update()
@@ -58,15 +63,21 @@ public class Level : MonoBehaviour
     void StartLevel1()
     {
         _player = Instantiate(level1Player, transform).GetComponent<Player>();
+        EventManifest.dispatchPlayer1Load();
         _player.camController.disableInput = false;
         _player.ActivateThirdPerson();
         ToggleItemPickupMessage(false);
         compass.Setup(_player.thirdPersonCamera.transform);
     }
 
-    void FinishLevel1()
+    void WinLevel1()
     {
-        winText.gameObject.SetActive(true);
+        winScreen.SetActive(true);
+    }
+
+    void LoseLevel1()
+    {
+        loseScreen.SetActive(true);
     }
 
     void ToggleItemPickupMessage(bool toggle)
