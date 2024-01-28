@@ -13,7 +13,7 @@ public class Game
         gameInstance = this;
 
         //currentGameState = GameState.START;
-        currentGameState = GameState.LEVEL1;
+        currentGameState = GameState.START;
         _setState(currentGameState);
     }
 
