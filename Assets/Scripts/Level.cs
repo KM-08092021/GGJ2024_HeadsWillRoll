@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static Game;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using Unity.FPS.UI;
 
 public class Level : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class Level : MonoBehaviour
     public int numOfRedeemedItems = 0;
     public TextMeshProUGUI redeemedItemsText, winText, pickupInstructionText;
     public int totalNumOfParts = 5;
+    public Unity.FPS.UI.Compass compass;
     private void Awake()
     {
         _addEventListeners();
@@ -60,6 +61,7 @@ public class Level : MonoBehaviour
         _player.camController.disableInput = false;
         _player.ActivateThirdPerson();
         ToggleItemPickupMessage(false);
+        compass.Setup(_player.thirdPersonCamera.transform);
     }
 
     void FinishLevel1()

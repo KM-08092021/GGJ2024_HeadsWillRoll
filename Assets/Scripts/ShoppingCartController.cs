@@ -6,7 +6,7 @@ using TMPro;
 public class ShoppingCartController : MonoBehaviour
 {
     public Level level;
-    
+    public ParticleSystem collectionEffect;
 
 
     // Start is called before the first frame update
@@ -28,6 +28,7 @@ public class ShoppingCartController : MonoBehaviour
         {
             level.RedeemItem(other.gameObject);
             Destroy(other.gameObject);
+            PlayParticleSystemOnce();
         }
     }
 
@@ -39,5 +40,24 @@ public class ShoppingCartController : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         //Debug.Log("Exited trigger zone with: " + other.gameObject.name);
+    }
+
+    void PlayParticleSystemOnce()
+    {
+        // Play the ParticleSystem
+        collectionEffect.Play();
+
+        // Wait for the duration of the ParticleSystem's main duration
+        float duration = collectionEffect.main.duration;
+        StartCoroutine(StopParticleSystemAfterDelay(duration));
+    }
+
+    System.Collections.IEnumerator StopParticleSystemAfterDelay(float delay)
+    {
+        // Wait for the specified duration
+        yield return new WaitForSeconds(delay);
+
+        // Stop the ParticleSystem
+        collectionEffect.Stop();
     }
 }
