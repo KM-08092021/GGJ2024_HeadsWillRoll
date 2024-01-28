@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Game;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class CutsceneManager : MonoBehaviour
 
     void StartIntro()
     {
-        overPass.StartIntro();
+        overPass.StartIntro(() =>
+        {
+            gameInstance.changeGameState(GameState.LEVEL1);
+        });
     }
+
+
 }

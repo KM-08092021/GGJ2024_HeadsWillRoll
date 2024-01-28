@@ -6,6 +6,9 @@ using UnityEngine;
 public static class EventManifest
 {
     public static event Action eventGameStart;
+    public static event Action eventLevel1Start;
+    public static event Action eventGameFinish;
+    public static event Action<bool> eventIsTouchingItem;
 
     public static void dispatchGameStart()
     {
@@ -15,5 +18,27 @@ public static class EventManifest
         eventGameStart();
     }
 
+    public static void dispatchLevel1Start()
+    {
+        Debug.Log("Dispatching level 1 start");
+        if (eventLevel1Start == null)
+            return;
+        eventLevel1Start();
+    }
 
+    public static void dispatchGameFinish()
+    {
+        Debug.Log("Dispatching game finish");
+        if (eventGameFinish == null)
+            return;
+        eventGameFinish();
+    }
+
+    public static void dispatchIsTouchingItem(bool isTouchingItem)
+    {
+        Debug.Log("Dispatching item touching: " + isTouchingItem);
+        if (eventGameFinish == null)
+            return;
+        eventIsTouchingItem(isTouchingItem);
+    }
 }

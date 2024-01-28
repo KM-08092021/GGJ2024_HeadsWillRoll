@@ -5,25 +5,38 @@ using UnityEngine;
 
 public class Game
 {
-    static Game gameInstance;
+    public static Game gameInstance;
     static GameState currentGameState;
     public enum GameState { START, LEVEL1, FINISH }    
     public Game()
     {
         gameInstance = this;
 
-        currentGameState = GameState.START;
+        //currentGameState = GameState.START;
+        currentGameState = World.beginningState;
         _setState(currentGameState);
     }
 
     protected virtual void _setState(GameState state)
     {
-        switch(state) 
+        currentGameState = state;
+        switch (currentGameState) 
         {
             case GameState.START:
                 EventManifest.dispatchGameStart();
                 break;
+            case GameState.LEVEL1:
+                EventManifest.dispatchLevel1Start();
+                break;
+            case GameState.FINISH:
+                EventManifest.dispatchGameFinish();
+                break;
         }
+    }
+
+    public void changeGameState(GameState state)
+    {
+        _setState(state);
     }
 
 }

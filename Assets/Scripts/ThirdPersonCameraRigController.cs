@@ -32,6 +32,7 @@ public class ThirdPersonCameraRigController : MonoBehaviour
             return;
         }
         playerRigidbody = playerTransform.GetComponent<Rigidbody>();
+        playerRigidbody.maxAngularVelocity = 15;
     }
 
     // Update is called once per frame
@@ -87,13 +88,14 @@ public class ThirdPersonCameraRigController : MonoBehaviour
 
             Vector3 horizontalInputLocalNormalized = new Vector3(0f, 0f, 1);
 
-            Debug.Log("local rot: " + transform.rotation.eulerAngles);
-            Debug.Log("force vector: " + transform.rotation * new Vector3(0, 0, 1));
+            //Debug.Log("local rot: " + transform.rotation.eulerAngles);
+            //Debug.Log("force vector: " + transform.rotation * new Vector3(0, 0, 1));
 
             Vector3 horizontalInput = transform.rotation * new Vector3(0f, 0f, inputX) * torqueMultiplier * -1;
-            playerRigidbody.AddTorque(horizontalInput);
+            //Debug.Log("inputx: " + inputX);
+            playerRigidbody.AddTorque(horizontalInput, ForceMode.Acceleration);
             Vector3 verticalInput = transform.rotation * new Vector3(inputY, 0f, 0f) * torqueMultiplier;
-            playerRigidbody.AddTorque(verticalInput);
+            playerRigidbody.AddTorque(verticalInput, ForceMode.Acceleration);
 
 
             Vector3 currentVelocity = playerRigidbody.velocity;

@@ -793,7 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441daf25583d52542a9085d003be0254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {x: 9, y: 17.42, z: 53}
+  spawnPoint: {x: 7.35, y: 17.42, z: 53}
   spawnRotation: {x: 0, y: 0, z: 0}
   camController: {fileID: 8989539721405739475}
   thirdPersonCamera: {fileID: 7240924491192757515}

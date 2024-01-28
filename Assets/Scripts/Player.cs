@@ -8,18 +8,25 @@ public class Player : MonoBehaviour
     public ThirdPersonCameraRigController camController;
     public Camera thirdPersonCamera, firstPersonCamera;
     public List<Rigidbody> playerParts = new List<Rigidbody>();
+    public Transform headTransform;
     // Start is called before the first frame update
     void Start()
     {
+        _addEventListeners();
         transform.localPosition = spawnPoint;
         transform.eulerAngles = spawnRotation;
     }
 
-    // Update is called once per frame
-    void Update()
+    void _addEventListeners()
     {
-        
+        EventManifest.eventGameFinish += PlayerFinish;
     }
+
+    void _removeEventListeners()
+    {
+        EventManifest.eventGameFinish -= PlayerFinish;
+    }
+
 
     public void ActivateFirstPerson()
     {
@@ -39,5 +46,10 @@ public class Player : MonoBehaviour
         {
             rb.isKinematic = toggle;
         }
+    }
+
+    public void PlayerFinish()
+    {
+        camController.disableInput = true;
     }
 }
