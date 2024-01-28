@@ -5,7 +5,8 @@ using static Game;
 
 public class CutsceneManager : MonoBehaviour
 {
-    public OverpassController overPass;
+    //public Level level1;
+    public OverpassController overPassCutsceneController;
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class CutsceneManager : MonoBehaviour
 
     void StartIntro()
     {
-        overPass.StartIntro(() =>
+        overPassCutsceneController.StartIntro(() =>
         {
             gameInstance.changeGameState(GameState.LEVEL1);
         });

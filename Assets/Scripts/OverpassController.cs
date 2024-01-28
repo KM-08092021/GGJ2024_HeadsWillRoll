@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OverpassController : MonoBehaviour
 {
-    public GameObject bus, player, playerParts;
+    public GameObject bus, player;
     Player _player;
     public float kinematicDisableDelay;
 
